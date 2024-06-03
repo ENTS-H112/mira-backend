@@ -8,16 +8,10 @@ const itemController = require('../controllers/itemController');
 router.post('/patients', itemController.addItem);
 
 // Route untuk mendapatkan daftar pasien
-router.get('/patients', itemController.getItems);
+router.get('/patients', itemController.getPatients);
 
 // Route untuk mendapatkan pasien berdasarkan id
-router.get('/patient/:id', itemController.getItem);
-
-// Route untuk mengupdate pasien berdasarkan id
-// router.put('/patient/:id', itemController.updateItem);
-
-// Route untuk menghapus pasien berdasarkan id
-// router.delete('/patient/:id', itemController.deleteItem);
+router.get('/patient/:id', itemController.getPatient);
 
 // Route untuk history pasien
 router.get('/history', itemController.getHistory);
@@ -30,5 +24,8 @@ router.get('/patient/:id/notification', itemController.getNotification);
 
 // Route untuk mengunggah file
 router.post('/upload', upload.single('file'), itemController.uploadFile);
+
+// Route untuk mengakses file
+router.get('/file/:filename', itemController.getFile);
 
 module.exports = router;
