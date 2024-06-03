@@ -16,7 +16,7 @@ jobs:
     - name: Deploy to Cloud Run
       uses: google-github-actions/deploy-cloudrun@main
       with:
-        service_account_key: ${{ secrets.GCP_SA_KEY }}
         project_id: ${{ secrets.GCP_PROJECT }}
         image: gcr.io/${{ secrets.GCP_PROJECT }}/mira-backend
         region: ${{ secrets.GCP_REGION }}
+        service: mira-backend 
