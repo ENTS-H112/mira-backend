@@ -13,10 +13,15 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+
     - name: Deploy to Cloud Run
-      uses: google-github-actions/deploy-cloudrun@main
+      uses: google-github-actions/deploy-cloudrun@v1
       with:
         project_id: ${{ secrets.GCP_PROJECT }}
-        image: gcr.io/${{ secrets.GCP_SA_KEY }}/mira-backend
         region: ${{ secrets.GCP_REGION }}
-        service: mira-backend 
+        service: mira-backend
+        image: gcr.io/${{ secrets.GCP_PROJECT }}/mira-backend
