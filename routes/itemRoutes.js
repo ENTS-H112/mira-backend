@@ -1,31 +1,29 @@
 const express = require('express');
 const router = express.Router();
+const controller = require('../controllers/itemController');
+const authenticate = require('../middleware/authenticate');
 const multer = require('multer');
-const upload = multer({ storage: multer.memoryStorage() });
-const itemController = require('../controllers/itemController');
+const upload = multer();
 
-// Route untuk menambahkan pasien
-router.post('/patients', itemController.addItem);
+// Rute untuk menambahkan item dengan autentikasi
+router.post('/add', authenticate, controller.addItem);
 
-// Route untuk mendapatkan daftar pasien
-router.get('/patients', itemController.getPatients);
+// Rute untuk mendapatkan semua pasien untuk pengguna yang login
+router.get('/patients', authenticate, controller.getPatients);
 
-// Route untuk mendapatkan pasien berdasarkan id
-router.get('/patient/:id', itemController.getPatient);
+// Rute untuk mendapatkan pasien berdasarkan ID
+router.get('/patient/:id', authenticate, controller.getPatient);
 
-// Route untuk history pasien
-router.get('/history', itemController.getHistory);
+// Rute untuk mendapatkan riwayat pasien berdasarkan ID pasien
+router.get('/patient/:id/history', authenticate, controller.getHistory);
 
-// Route untuk history pasien berdasarkan id
-router.get('/patient/:id/history', itemController.getHistory);
+// Rute untuk mendapatkan notifikasi pasien berdasarkan ID pasien
+router.get('/patient/:id/notification', authenticate, controller.getNotification);
 
-// Route untuk notifikasi pasien berdasarkan id
-router.get('/patient/:id/notification', itemController.getNotification);
+// Rute untuk mengunggah file dengan autentikasi
+router.post('/upload', authenticate, upload.single('file'), controller.uploadFile);
 
-// Route untuk mengunggah file
-router.post('/upload', upload.single('file'), itemController.uploadFile);
-
-// Route untuk mengakses file
-router.get('/file/:filename', itemController.getFile);
+// Rute untuk mengakses file yang sudah diunggah
+router.get('/file/:filename', controller.getFile);
 
 module.exports = router;

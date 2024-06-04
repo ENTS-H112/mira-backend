@@ -15,6 +15,7 @@ const isValidTime = (timeString) => {
 
 exports.addItem = async (req, res) => {
   try {
+    const { uid } = req.user; // Ambil ID pengguna dari middleware autentikasi
     const { nama_pasien, alamat, tanggal_lahir, gender, no_hp, email, tanggal_kunjungan, jam_kunjungan } = req.body;
 
     if (!nama_pasien || !alamat || !tanggal_lahir || !gender || !no_hp || !email || !tanggal_kunjungan || !jam_kunjungan) {
@@ -56,6 +57,7 @@ exports.addItem = async (req, res) => {
     const id = uuidv4();
     const itemData = {
       id,
+      user_id: uid, // Tambahkan ID pengguna ke data pasien
       nama_pasien,
       alamat,
       tanggal_lahir: moment(tanggal_lahir).format('YYYY-MM-DD'),
@@ -66,7 +68,7 @@ exports.addItem = async (req, res) => {
       hari_kunjungan: dayOfWeek,
       jam_kunjungan: `${startTime.format('HH:mm')}-${endTime}`,
       nomor_antrian,
-      status: 'Menunggu Konfirmasi' 
+      status: 'Menunggu Konfirmasi'
     };
 
     await db.collection('pasien').doc(id).set(itemData);
@@ -87,10 +89,13 @@ exports.addItem = async (req, res) => {
   }
 };
 
-// Get all patiens
+// Get all patients for the logged-in user
 exports.getPatients = async (req, res) => {
   try {
-    const snapshot = await db.collection('pasien').get();
+    const { uid } = req.user; // Ambil ID pengguna dari middleware autentikasi
+    const snapshot = await db.collection('pasien')
+      .where('user_id', '==', uid)
+      .get();
     const items = snapshot.docs.map(doc => doc.data());
     res.status(200).send(items);
   } catch (error) {
@@ -203,4 +208,3 @@ exports.getFile = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
-
