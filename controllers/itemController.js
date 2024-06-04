@@ -13,7 +13,7 @@ const isValidTime = (timeString) => {
   return timeRegExp.test(timeString);
 };
 
-exports.addItem = async (req, res) => {
+exports.addAppointment = async (req, res) => {
   try {
     const { uid } = req.user; // Ambil ID pengguna dari middleware autentikasi
     const { nama_pasien, alamat, tanggal_lahir, gender, no_hp, email, tanggal_kunjungan, jam_kunjungan } = req.body;

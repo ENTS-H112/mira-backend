@@ -6,7 +6,7 @@ const multer = require('multer');
 const upload = multer();
 
 // Rute untuk menambahkan item dengan autentikasi
-router.post('/add', authenticate, controller.addItem);
+router.post('/add', authenticate, controller.addAppointment);
 
 // Rute untuk mendapatkan semua pasien untuk pengguna yang login
 router.get('/patients', authenticate, controller.getPatients);

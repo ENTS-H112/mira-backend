@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
         {
             message: 'Welcome to the MIRA API',
             endpoints: {
-                add: '/add',
+                addAppointment: '/add',
                 getPatients: '/patients',
                 getPatient: '/patient/:id',
                 getHistory: '/patient/:id/history',
