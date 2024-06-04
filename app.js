@@ -12,7 +12,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', itemRoutes);
 
 app.get('/', (req, res) => {
-    res.send('Welcome to the Express API');
+    res.send(
+        'Welcome to the REST API built with Node.js, Express, and Firestore.'
+    );
 });
 
 // Error handling middleware
