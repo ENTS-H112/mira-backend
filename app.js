@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const itemRoutes = require('./routes/itemRoutes');
+const { getPatients } = require('./controllers/itemController');
 
 
 const app = express();
@@ -13,7 +14,18 @@ app.use('/', itemRoutes);
 
 app.get('/', (req, res) => {
     res.send(
-        'Welcome to the REST API built with Node.js, Express, and Firestore.'
+        {
+            message: 'Welcome to the MIRA API',
+            endpoints: {
+                add: '/add',
+                getPatients: '/patients',
+                getPatient: '/patient/:id',
+                getHistory: '/patient/:id/history',
+                getNotification: '/patient/:id/notification',
+                uploadFile: '/upload',
+                getFile: '/file/:filename'
+            }
+        }
     );
 });
 
