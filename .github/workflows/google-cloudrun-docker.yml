@@ -36,7 +36,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ env.DOCKER_IMAGE_URL }}:latest -f Dockerfile.
+          docker buildx build --platform=linux/amd64 -t ${{ env.DOCKER_IMAGE_URL }}:latest -f Dockerfile .
           docker push ${{ env.DOCKER_IMAGE_URL }}:latest
 
       - name: Deploy to Cloud Run
