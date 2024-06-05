@@ -3,7 +3,7 @@ const serviceAccount = require("../mira-team-firebase-adminsdk-i5a75-9c5fa1090e.
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  storageBucket: 'mira-dicom-image'
+  storageBucket: 'mira-team.appspot.com'
 });
 
 const db = admin.firestore();

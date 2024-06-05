@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const itemRoutes = require('./routes/itemRoutes');
+const { updateProfile } = require('./controllers/itemController');
 
 
 const app = express();
@@ -18,6 +19,7 @@ app.get('/', (req, res) => {
             description: 'This API is used for managing appointments and patients data',
             endpoints: {
                 getUser: '/user',
+                updateProfile: '/user',
                 addAppointment: '/add',
                 getPatients: '/patients',
                 getPatient: '/patient/:id',

@@ -2,11 +2,14 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/itemController');
 const authenticate = require('../middleware/authenticate');
-const multer = require('multer');
-const upload = multer();
+const upload = require('../middleware/multer');
+// const upload = multer();
 
 // Rute untuk mendapatkan user yang login
 router.get('/user', authenticate, controller.getUser);
+
+// Rute untuk memperbarui profil pengguna
+router.patch('/user', authenticate, upload.single('profile_picture'), controller.updateProfile);
 
 // Rute untuk menambahkan item dengan autentikasi
 router.post('/add', authenticate, controller.addAppointment);
