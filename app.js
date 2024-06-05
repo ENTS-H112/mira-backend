@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const itemRoutes = require('./routes/itemRoutes');
-const { getPatients } = require('./controllers/itemController');
 
 
 const app = express();
@@ -16,6 +15,7 @@ app.get('/', (req, res) => {
     res.send(
         {
             message: 'Welcome to the MIRA API',
+            description: 'This API is used for managing appointments and patients data',
             endpoints: {
                 getUser: '/user',
                 addAppointment: '/add',
@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
                 uploadFile: '/upload',
                 getFile: '/file/:filename'
             },
-            message: 'Last updated: 2024-06-05',
+            lastUpdate: new Date().toISOString().split('T')[0]
         }
     );
 });
