@@ -17,6 +17,7 @@ app.get('/', (req, res) => {
         {
             message: 'Welcome to the MIRA API',
             endpoints: {
+                getUser: '/user',
                 addAppointment: '/add',
                 getPatients: '/patients',
                 getPatient: '/patient/:id',
@@ -24,7 +25,8 @@ app.get('/', (req, res) => {
                 getNotification: '/patient/:id/notification',
                 uploadFile: '/upload',
                 getFile: '/file/:filename'
-            }
+            },
+            message: 'Last updated: 2024-06-05',
         }
     );
 });

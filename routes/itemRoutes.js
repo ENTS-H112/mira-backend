@@ -5,6 +5,9 @@ const authenticate = require('../middleware/authenticate');
 const multer = require('multer');
 const upload = multer();
 
+// Rute untuk mendapatkan user yang login
+router.get('/user', authenticate, controller.getUser);
+
 // Rute untuk menambahkan item dengan autentikasi
 router.post('/add', authenticate, controller.addAppointment);
 

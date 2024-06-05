@@ -151,6 +151,20 @@ exports.getNotification = async (req, res) => {
   }
 }
 
+// Get user from Firebase Authentication and users collection
+exports.getUser = async (req, res) => {
+  try {
+    const { uid } = req.user;
+    const user = await db.collection('users').doc(uid).get();
+    if (!user.exists) {
+      return res.status(404).send('User not found.');
+    }
+    res.status(200).send(user.data());
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
 // Upload file to Google Cloud Storage
 exports.uploadFile = async (req, res) => {
   try {
