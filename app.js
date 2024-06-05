@@ -13,25 +13,24 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', itemRoutes);
 
 app.get('/', (req, res) => {
-    res.send(
-        {
-            message: 'Welcome to the MIRA API',
-            description: 'This API is used for managing appointments and patients data',
-            endpoints: {
-                getUser: '/user',
-                updateProfile: '/user',
-                addAppointment: '/add',
-                getPatients: '/patients',
-                getPatient: '/patient/:id',
-                getHistory: '/patient/:id/history',
-                getNotification: '/patient/:id/notification',
-                uploadFile: '/upload',
-                getFile: '/file/:filename'
-            },
-            lastUpdate: new Date().toISOString().split('T')[0]
-        }
-    );
+    res.send({
+        message: 'Welcome to the MIRA API',
+        description: 'This API is used for managing appointments and patients data',
+        endpoints: {
+            getUser: '/user',
+            updateProfile: '/user',
+            addAppointment: '/add',
+            getPatients: '/patients',
+            getPatient: '/patient/:id',
+            getHistory: '/patient/:id/history',
+            getNotification: '/patient/:id/notification',
+            uploadFile: '/upload',
+            getFile: '/file/:filename'
+        },
+        lastUpdate: new Date().toISOString()
+    });
 });
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {
