@@ -243,7 +243,10 @@ exports.addAppointment = async (req, res) => {
       doc.ref.update({ nomor_antrian: `${tanggal_kunjungan_formatted}-${index + 1}` });
     });
 
-    res.status(201).send("Berhasil membuat janji temu.");
+    res.status(201).json({
+      message: 'Reservasi berhasil ditambahkan.',
+      data: itemData
+    });
   } catch (error) {
     res.status(500).send(error.message);
   }
