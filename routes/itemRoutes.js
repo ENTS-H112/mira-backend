@@ -5,19 +5,19 @@ const authenticate = require('../middleware/authenticate');
 const upload = require('../middleware/multer');
 
 // Rute menambah dokter
-router.post('/doctor', upload.single('profile_picture'), controller.addDoctor);
+router.post('/doctor', authenticate, upload.single('profile_picture'), controller.addDoctor);
 
 // Rute untuk mendapatkan semua dokter
-router.get('/doctors', controller.getDoctors);
+router.get('/doctors', authenticate, controller.getDoctors);
 
 // Rute untuk mendapatkan dokter berdasarkan ID
-router.get('/doctor/:id', controller.getDoctor);
+router.get('/doctor/:id', authenticate, controller.getDoctor);
 
 // Rute untuk update dokter berdasarkan ID
-router.patch('/doctor/:id', upload.single('profile_picture'), controller.updateDoctor);
+router.patch('/doctor/:id', authenticate, upload.single('profile_picture'), controller.updateDoctor);
 
 // Rute untuk menghapus dokter berdasarkan ID
-router.delete('/doctor/:id', controller.deleteDoctor);
+router.delete('/doctor/:id', authenticate, controller.deleteDoctor);
 
 // Rute untuk mendapatkan user yang login
 router.get('/user', authenticate, controller.getUser);
