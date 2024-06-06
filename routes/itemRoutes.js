@@ -24,7 +24,7 @@ router.get('/patient/:id', authenticate, controller.getPatient);
 router.get('/patient/:id/history', authenticate, controller.getHistory);
 
 // Rute untuk mendapatkan notifikasi pasien berdasarkan ID pasien
-router.get('/patient/:id/notification', authenticate, controller.getNotification);
+router.get('/patient/:id/notification', authenticate, controller.updateStatus);
 
 // Rute untuk mengunggah file dengan autentikasi
 router.post('/upload', authenticate, upload.single('file'), controller.uploadFile);

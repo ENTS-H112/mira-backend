@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const itemRoutes = require('./routes/itemRoutes');
-const { updateProfile } = require('./controllers/itemController');
 
 
 const app = express();
@@ -27,7 +26,7 @@ app.get('/', (req, res) => {
             uploadFile: '/upload',
             getFile: '/file/:filename'
         },
-        lastUpdate: new Date().toISOString()
+        lastUpdate: 'Thursday, 6th June 2024, 09:00 AM'
     });
 });
 

@@ -15,10 +15,10 @@ const isValidTime = (timeString) => {
 
 exports.addAppointment = async (req, res) => {
   try {
-    const { uid } = req.user; // Ambil ID pengguna dari middleware autentikasi
-    const { nama_pasien, alamat, tanggal_lahir, gender, no_hp, email, tanggal_kunjungan, jam_kunjungan } = req.body;
+    const { uid } = req.user;
+    const { nama_pasien, alamat, tanggal_lahir, gender, no_hp, email, tanggal_kunjungan, jam_kunjungan, jenis_periksa } = req.body;
 
-    if (!nama_pasien || !alamat || !tanggal_lahir || !gender || !no_hp || !email || !tanggal_kunjungan || !jam_kunjungan) {
+    if (!nama_pasien || !alamat || !tanggal_lahir || !gender || !no_hp || !email || !tanggal_kunjungan || !jam_kunjungan || !jenis_periksa) {
       return res.status(400).send('All fields are required.');
     }
 
@@ -68,6 +68,8 @@ exports.addAppointment = async (req, res) => {
       hari_kunjungan: dayOfWeek,
       jam_kunjungan: `${startTime.format('HH:mm')}-${endTime}`,
       nomor_antrian,
+      jenis_periksa,
+      status_hasil: false,
       status: 'Menunggu Konfirmasi'
     };
 
@@ -88,6 +90,7 @@ exports.addAppointment = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
+
 
 // Get all patients for the logged-in user
 exports.getPatients = async (req, res) => {
@@ -136,20 +139,50 @@ exports.getHistory = async (req, res) => {
   }
 };
 
-// Get notification by patient ID
-exports.getNotification = async (req, res) => {
+// Update status and send notification
+exports.updateStatus = async (req, res) => {
   try {
     const { id } = req.params;
-    const snapshot = await db.collection('pasien').doc(id).get();
-    if (!snapshot.exists) {
-      return res.status(404).send('Item not found.');
+    const { status, status_hasil } = req.body;
+
+    const docRef = db.collection('pasien').doc(id);
+    const docSnapshot = await docRef.get();
+
+    if (!docSnapshot.exists) {
+      return res.status(404).send('Appointment not found.');
     }
-    const item = snapshot.data();
-    res.status(200).send(`Status janji temu Anda: ${item.status}`);
+
+    const currentData = docSnapshot.data();
+
+    const updatedData = {
+      status: status !== undefined ? status : currentData.status,
+      status_hasil: status_hasil !== undefined ? status_hasil : currentData.status_hasil
+    };
+
+    await docRef.update(updatedData);
+
+    // Send notification
+    const message = {
+      notification: {
+        title: 'Status Reservasi Diperbarui',
+        body: `Status janji temu Anda telah diperbarui menjadi ${updatedData.status}`
+      },
+      token: currentData.fcmToken 
+    };
+
+    admin.messaging().send(message)
+      .then((response) => {
+        console.log('Successfully sent message:', response);
+      })
+      .catch((error) => {
+        console.log('Error sending message:', error);
+      });
+
+    res.status(200).send('Status updated and notification sent.');
   } catch (error) {
     res.status(500).send(error.message);
   }
-}
+};
 
 // Get user from Firebase Authentication and users collection
 exports.getUser = async (req, res) => {
@@ -172,6 +205,7 @@ const removeUndefinedFields = (obj) => {
   return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v !== undefined));
 };
 
+// Update user profile
 exports.updateProfile = async (req, res) => {
   try {
     const { uid } = req.user;
