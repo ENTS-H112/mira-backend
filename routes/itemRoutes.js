@@ -3,7 +3,21 @@ const router = express.Router();
 const controller = require('../controllers/itemController');
 const authenticate = require('../middleware/authenticate');
 const upload = require('../middleware/multer');
-// const upload = multer();
+
+// Rute menambah dokter
+router.post('/doctor', upload.single('profile_picture'), controller.addDoctor);
+
+// Rute untuk mendapatkan semua dokter
+router.get('/doctors', controller.getDoctors);
+
+// Rute untuk mendapatkan dokter berdasarkan ID
+router.get('/doctor/:id', controller.getDoctor);
+
+// Rute untuk update dokter berdasarkan ID
+router.patch('/doctor/:id', upload.single('profile_picture'), controller.updateDoctor);
+
+// Rute untuk menghapus dokter berdasarkan ID
+router.delete('/doctor/:id', controller.deleteDoctor);
 
 // Rute untuk mendapatkan user yang login
 router.get('/user', authenticate, controller.getUser);

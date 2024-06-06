@@ -16,6 +16,11 @@ app.get('/', (req, res) => {
         message: 'Welcome to the MIRA API',
         description: 'This API is used for managing appointments and patients data',
         endpoints: {
+            addDoctor: '/doctor',
+            getDoctors: '/doctors',
+            getDoctor: '/doctor/:id',
+            updateDoctor: '/doctor/:id',
+            deleteDoctor: '/doctor/:id',
             getUser: '/user',
             updateProfile: '/user',
             addAppointment: '/add',
@@ -26,7 +31,7 @@ app.get('/', (req, res) => {
             uploadFile: '/upload',
             getFile: '/file/:filename'
         },
-        lastUpdate: 'Thursday, 6th June 2024, 09:00 AM'
+        lastUpdate: 'Thursday, 6th June 2024, 07:15 PM'
     });
 });
 
