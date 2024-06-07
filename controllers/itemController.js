@@ -75,13 +75,19 @@ exports.getDoctor = async (req, res) => {
     const { id } = req.params;
     const snapshot = await db.collection('dokter').doc(id).get();
     if (!snapshot.exists) {
-      return res.status(404).send('Item not found.');
+      return res.status(404).json({
+        message: 'Doctor not found.'
+      })
     }
     const item = snapshot.data();
-    res.status(200).send(item);
+    res.status(200).json({
+      data: item
+    })
   }
   catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).json({
+      message: error.message
+    })
   }
 };
 
@@ -95,7 +101,9 @@ exports.updateDoctor = async (req, res) => {
     const docSnapshot = await docRef.get();
 
     if (!docSnapshot.exists) {
-      return res.status(404).send('Doctor not found.');
+      return res.status(404).json({
+        message: 'Doctor not found.'
+      })
     }
 
     const currentData = docSnapshot.data();
@@ -136,7 +144,9 @@ exports.updateDoctor = async (req, res) => {
     };
 
     await docRef.update(updatedData);
-    res.status(200).send('Doctor information updated successfully.');
+    res.status(200).json({
+      message: 'Doctor updated successfully.',
+    })
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -160,17 +170,14 @@ exports.deleteDoctor = async (req, res) => {
 };
 
 // Helper function to validate date and time
-const isValidDate = (dateString) => {
-  const date = new Date(dateString);
-  return !isNaN(date.getTime());
-};
+function isValidDate(date) {
+  return moment(date, 'YYYY-MM-DD', true).isValid();
+}
 
-const isValidTime = (timeString) => {
-  const timeRegExp = /^([01]\d|2[0-3]):([0-5]\d)$/;
-  return timeRegExp.test(timeString);
-};
+function isValidTime(time) {
+  return moment(time, 'HH:mm', true).isValid();
+}
 
-// menambah jadwal reservasi
 exports.addAppointment = async (req, res) => {
   try {
     const { uid } = req.user;
@@ -188,6 +195,18 @@ exports.addAppointment = async (req, res) => {
       return res.status(400).send('Invalid time format.');
     }
 
+    const today = moment().format('YYYY-MM-DD');
+    const userAppointments = await db.collection('pasien')
+      .where('user_id', '==', uid)
+      .where('tanggal_kunjungan', '==', today)
+      .get();
+
+    if (userAppointments.size >= 2) {
+      return res.status(400).json({
+        message: 'Anda telah mencapai batas maksimal 2 appointment per hari.'
+      });
+    }
+
     const dayOfWeek = moment(tanggal_kunjungan).format('dddd');
     const startTime = moment(jam_kunjungan, 'HH:mm');
     const endTime = startTime.clone().add(1, 'hour').format('HH:mm');
@@ -202,7 +221,9 @@ exports.addAppointment = async (req, res) => {
       .get();
 
     if (!snapshot.empty) {
-      return res.status(400).send('Mohon maaf, jadwal yang Anda pilih sudah terisi. Silakan pilih jadwal lain.');
+      return res.status(400).json({
+        message: 'Mohon maaf, jadwal reservasi sudah terisi. Silakan pilih jadwal lain.'
+      });
     }
 
     // Hitung jumlah dokumen dengan tanggal kunjungan yang sama
@@ -248,7 +269,9 @@ exports.addAppointment = async (req, res) => {
       data: itemData
     });
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).json({
+      message: error.message
+    });
   }
 };
 
@@ -256,7 +279,7 @@ exports.addAppointment = async (req, res) => {
 // Get all patients for the logged-in user
 exports.getPatients = async (req, res) => {
   try {
-    const { uid } = req.user; 
+    const { uid } = req.user;
     const snapshot = await db.collection('pasien')
       .where('user_id', '==', uid)
       .get();
@@ -273,7 +296,9 @@ exports.getPatient = async (req, res) => {
     const { id } = req.params;
     const snapshot = await db.collection('pasien').doc(id).get();
     if (!snapshot.exists) {
-      return res.status(404).send('Item not found.');
+      return res.status(404).json({
+        message: 'Patient not found.'
+      })
     }
     const item = snapshot.data();
     res.status(200).send(item);
@@ -300,9 +325,10 @@ exports.getHistory = async (req, res) => {
   }
 };
 
-// Update status and send notification
+// Update status and send notifications
 exports.updateStatus = async (req, res) => {
   try {
+    const { uid } = req.user;
     const { id } = req.params;
     const { status, status_hasil } = req.body;
 
@@ -310,38 +336,69 @@ exports.updateStatus = async (req, res) => {
     const docSnapshot = await docRef.get();
 
     if (!docSnapshot.exists) {
-      return res.status(404).send('Appointment not found.');
+      return res.status(404).json({
+        message: 'Patient not found.'
+      });
     }
 
     const currentData = docSnapshot.data();
 
+    // Ensure the user is updating their own data
+    if (currentData.user_id !== uid) {
+      return res.status(403).json({
+        message: 'Unauthorized to update this data.'
+      });
+    }
+
+    // Create updated data object
     const updatedData = {
       status: status !== undefined ? status : currentData.status,
       status_hasil: status_hasil !== undefined ? status_hasil : currentData.status_hasil
     };
 
-    await docRef.update(updatedData);
+    await docRef.update(updatedData); // Update the document in Firestore
 
-    // Send notification
-    const message = {
-      notification: {
-        title: 'Status Reservasi Diperbarui',
-        body: `Status janji temu Anda telah diperbarui menjadi ${updatedData.status}`
-      },
-      token: currentData.fcmToken 
-    };
+    // Prepare notifications
+    let notifications = [];
 
-    admin.messaging().send(message)
-      .then((response) => {
-        console.log('Successfully sent message:', response);
-      })
-      .catch((error) => {
-        console.log('Error sending message:', error);
+    if (status !== undefined && status !== currentData.status) {
+      notifications.push({
+        notification: {
+          title: 'Status Reservasi Diperbarui',
+          body: `Status janji temu Anda telah diperbarui menjadi ${updatedData.status}`
+        },
+        token: currentData.fcmToken
       });
+    }
 
-    res.status(200).send('Status updated and notification sent.');
+    if (status_hasil !== undefined && status_hasil !== currentData.status_hasil) {
+      notifications.push({
+        notification: {
+          title: 'Status Hasil Diperbarui',
+          body: `Status hasil Anda telah diperbarui menjadi ${updatedData.status_hasil ? 'true' : 'false'}`
+        },
+        token: currentData.fcmToken
+      });
+    }
+
+    // Send notifications
+    notifications.forEach((message) => {
+      admin.messaging().send(message)
+        .then((response) => {
+          console.log('Successfully sent message:', response);
+        })
+        .catch((error) => {
+          console.log('Error sending message:', error);
+        });
+    });
+
+    res.status(200).json({
+      message: 'Status updated successfully.'
+    });
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).json({
+      message: error.message
+    });
   }
 };
 
@@ -375,7 +432,9 @@ exports.updateProfile = async (req, res) => {
     const userSnapshot = await userRef.get();
 
     if (!userSnapshot.exists) {
-      return res.status(404).send('User not found.');
+      return res.status(404).json({
+        message: 'User not found.'
+      })
     }
 
     const currentUserData = userSnapshot.data();

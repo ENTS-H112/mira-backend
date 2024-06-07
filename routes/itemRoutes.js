@@ -25,6 +25,9 @@ router.get('/user', authenticate, controller.getUser);
 // Rute untuk memperbarui profil pengguna
 router.patch('/user', authenticate, upload.single('profile_picture'), controller.updateProfile);
 
+// Rute untuk mendapatkan notifikasi pasien berdasarkan ID user
+router.get('/user/:id/notification', authenticate, controller.updateStatus);
+
 // Rute untuk menambahkan item dengan autentikasi
 router.post('/add', authenticate, controller.addAppointment);
 
@@ -36,9 +39,6 @@ router.get('/patient/:id', authenticate, controller.getPatient);
 
 // Rute untuk mendapatkan riwayat pasien berdasarkan ID pasien
 router.get('/patient/:id/history', authenticate, controller.getHistory);
-
-// Rute untuk mendapatkan notifikasi pasien berdasarkan ID pasien
-router.get('/patient/:id/notification', authenticate, controller.updateStatus);
 
 // Rute untuk mengunggah file dengan autentikasi
 router.post('/upload', authenticate, upload.single('file'), controller.uploadFile);

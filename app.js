@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
             uploadFile: '/upload',
             getFile: '/file/:filename'
         },
-        lastUpdate: 'Thursday, 6th June 2024, 07:15 PM'
+        lastUpdate: 'Friday, 7th June 2024, 10:15 AM'
     });
 });
 
