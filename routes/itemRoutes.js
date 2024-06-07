@@ -37,6 +37,12 @@ router.get('/patients', authenticate, controller.getPatients);
 // Rute untuk mendapatkan pasien berdasarkan ID
 router.get('/patient/:id', authenticate, controller.getPatient);
 
+// delete patient by id
+router.delete('/patient/:id', authenticate, controller.deletePatient);
+
+// Rute untuk mengupdate pasien berdasarkan ID
+router.patch('/patient/:id', authenticate, controller.updatePatient);
+
 // Rute untuk mendapatkan riwayat pasien berdasarkan ID pasien
 router.get('/patient/:id/history', authenticate, controller.getHistory);
 

@@ -26,12 +26,14 @@ app.get('/', (req, res) => {
             addAppointment: '/add',
             getPatients: '/patients',
             getPatient: '/patient/:id',
+            deletePatient: '/patient/:id',
+            updatePatient: '/patient/:id',
             getHistory: '/patient/:id/history',
-            getNotification: '/patient/:id/notification',
+            getNotification: '/user/:id/notification',
             uploadFile: '/upload',
             getFile: '/file/:filename'
         },
-        lastUpdate: 'Friday, 7th June 2024, 10:15 AM'
+        lastUpdate: 'Friday, 7th June 2024, 02:15 PM'
     });
 });
 

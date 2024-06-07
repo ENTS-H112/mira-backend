@@ -307,6 +307,63 @@ exports.getPatient = async (req, res) => {
   }
 };
 
+// Delete patient by ID
+exports.deletePatient = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const docRef = db.collection('pasien').doc(id);
+
+    const docSnapshot = await docRef.get();
+    if (!docSnapshot.exists) {
+      return res.status(404).send('Patient not found.');
+    }
+
+    await docRef.delete();
+    res.status(200).json({
+      message: 'Patient deleted successfully.'
+    })
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
+// Update patient by ID
+exports.updatePatient = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { nama_pasien, alamat, email, no_hp, tanggal_lahir } = req.body;
+
+    const docRef = db.collection('pasien').doc(id);
+    const docSnapshot = await docRef.get();
+
+    if (!docSnapshot.exists) {
+      return res.status(404).json({
+        message: 'Patient not found.'
+      });
+    }
+
+    const currentData = docSnapshot.data();
+
+    const updatedData = {
+      nama_pasien: nama_pasien !== undefined ? nama_pasien : currentData.nama_pasien,
+      alamat: alamat !== undefined ? alamat : currentData.alamat,
+      email: email !== undefined ? email : currentData.email,
+      no_hp: no_hp !== undefined ? no_hp : currentData.no_hp,
+      tanggal_lahir: tanggal_lahir !== undefined ? moment(tanggal_lahir).format('YYYY-MM-DD') : currentData.tanggal_lahir
+    };
+
+    await docRef.update(updatedData);
+    res.status(200).json({
+      message: 'Patient updated successfully.'
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message
+    });
+  }
+};
+
+
 // Get history patient by patient ID
 exports.getHistory = async (req, res) => {
   try {
