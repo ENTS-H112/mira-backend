@@ -46,6 +46,12 @@ router.patch('/patient/:id', authenticate, controller.updatePatient);
 // Rute untuk mendapatkan riwayat pasien berdasarkan ID pasien
 router.get('/patient/:id/history', authenticate, controller.getHistory);
 
+// add result to patient 
+router.post('/patient/:id/result', authenticate, upload.single('result'), controller.addResult);
+
+// get result by id
+router.get('/patient/:id/result', authenticate, controller.getResult);
+
 // Rute untuk mengunggah file dengan autentikasi
 router.post('/upload', authenticate, upload.single('file'), controller.uploadFile);
 

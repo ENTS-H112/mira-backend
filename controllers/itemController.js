@@ -536,7 +536,76 @@ exports.updateProfile = async (req, res) => {
   }
 };
 
+// Add result to the patient
+exports.addResult = async (req, res) => {
+  try {
+    const { id } = req.params;
 
+    const docRef = db.collection('pasien').doc(id);
+    const docSnapshot = await docRef.get();
+
+    if (!docSnapshot.exists) {
+      return res.status(404).json({
+        message: 'Patient not found.'
+      });
+    }
+
+    if (!req.file) {
+      return res.status(400).json({
+        message: 'No file uploaded.'
+      });
+    }
+
+    const fileName = `result/${uuidv4()}-${req.file.originalname}`;
+    const file = bucket.file(fileName);
+
+    // Upload the file to Firebase Storage
+    await file.save(req.file.buffer, {
+      metadata: { contentType: req.file.mimetype }
+    });
+
+    // Get the public URL of the uploaded file
+    const fileUrl = `https://storage.googleapis.com/${bucket.name}/${fileName}`;
+
+    // Update the Firestore document with the file URL
+    await docRef.update({ result: fileUrl });
+
+    res.status(200).json({
+      message: 'Result added successfully.',
+      fileUrl: fileUrl
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message
+    });
+  }
+};
+
+// Get result by patient ID
+exports.getResult = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const snapshot = await db.collection('pasien').doc(id).get();
+    if (!snapshot.exists) {
+      return res.status(404).json({
+        message: 'Patient not found.'
+      });
+    }
+    const data = snapshot.data();
+    if (!data.result) {
+      return res.status(404).json({
+        message: 'Result not found.'
+      });
+    }
+    res.status(200).json({
+      result: data.result
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message
+    });
+  }
+};
 
 // Upload file to Google Cloud Storage
 exports.uploadFile = async (req, res) => {
