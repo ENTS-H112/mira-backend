@@ -1,7 +1,13 @@
 
-# Repository API to tim mobile
+# Repository API Mira Team backend
 
-Silakan gunakan API ini untuk tim mobile
+## Upcoming features:
+- Strongly encrypted data
+- Integrated with Satu Sehat Kemenkes
+- Add Organization ID (Hospitals, Clinics, Other Health Services, Etc.)
+- Intergrate with WA, Telegram, etc.
+- more exclusive features
+
 
 ## Changes between the first and second version
 ### api-v1
