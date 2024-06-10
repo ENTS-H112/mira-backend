@@ -168,5 +168,7 @@ Response
 ```
 ## Coming Soon
 
+## Postman Collection
 
+ [Postman Collection](https://planetary-desert-87791.postman.co/workspace/New-Team-Workspace~04bf919a-1924-46ef-a272-1654e0d870ab/collection/24413897-491a24f2-df66-4b40-aba0-a6729b331c06?action=share&creator=24413897)
 
