@@ -24,7 +24,58 @@ run using Nodemon
     
 ## How to use API
 
+Get all endpoint
+```bash
+  http://localhost:4000
+```
+Response
+```json
+{
+    "message": "Welcome to the MIRA API",
+    "description": "This API is used for managing appointments and patients data",
+    "endpoints": {
+        "addDoctor": "/doctor",
+        "getDoctors": "/doctors",
+        "getDoctor": "/doctor/:id",
+        "updateDoctor": "/doctor/:id",
+        "deleteDoctor": "/doctor/:id",
+        "getUser": "/user",
+        "updateProfile": "/user",
+        "addAppointment": "/add",
+        "getPatients": "/patients",
+        "getPatient": "/patient/:id",
+        "deletePatient": "/patient/:id",
+        "updatePatient": "/patient/:id",
+        "getHistory": "/patient/:id/history",
+        "getNotification": "/user/:id/notification",
+        "addResult": "/patient/:id/result",
+        "getResult": "/patient/:id/result",
+        "uploadFile": "/upload",
+        "getFile": "/file/:filename"
+    },
+    "lastUpdate": "Friday, 8th June 2024, 07:50 PM"
+}
+```
+
+Login to get token (POST)
+
+```bash
+https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={key}
+```
+Body
+```json
+{
+    "email": "email@mail.com",
+    "password": "pasword",
+    "returnSecureToken": true
+}
+```
+
+### Save idToken and insert it into the authorization Bearer
+<b>Note: Bearer Token is only valid for one hour.</b>
+
 POST Create new appointment
+
 
 ```bash
   http://localhost:4000/add
@@ -39,6 +90,7 @@ POST Create new appointment
   "email": "email@example.com",
   "tanggal_kunjungan": "2024-06-03",
   "jam_kunjungan": "11:00"
+  "jenis_periksa": "jenis"
 }
 ```
 
@@ -51,7 +103,7 @@ Response
 ```json
 [
     {
-        "nama_pasien": "Sonn",
+        "nama_pasien": "name",
         "gender": "Male",
         "no_hp": "1234567890",
         "jam_kunjungan": "11:00-12:00",
@@ -66,7 +118,7 @@ Response
         "status": "Menunggu Konfirmasi"
     },
     {
-        "nama_pasien": "John Doe",
+        "nama_pasien": "name",
         "gender": "Male",
         "no_hp": "1234567890",
         "jam_kunjungan": "10:00-11:00",
