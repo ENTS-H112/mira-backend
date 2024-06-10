@@ -4,7 +4,7 @@ const itemRoutes = require('./routes/itemRoutes');
 
 
 const app = express();
-const port = 4000;
+const port = 4001;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -13,7 +13,7 @@ app.use('/', itemRoutes);
 
 app.get('/', (req, res) => {
     res.send({
-        message: 'Welcome to the MIRA API',
+        message: 'Welcome to the MIRA API V2',
         description: 'This API is used for managing appointments and patients data',
         endpoints: {
             addDoctor: '/doctor',
@@ -35,7 +35,7 @@ app.get('/', (req, res) => {
             uploadFile: '/upload',
             getFile: '/file/:filename'
         },
-        lastUpdate: 'Friday, 8th June 2024, 07:50 PM'
+        lastUpdate: 'Monday, 10th June 2024, 07:15 PM'
     });
 });
 
