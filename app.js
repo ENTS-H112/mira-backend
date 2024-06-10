@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const itemRoutes = require('./routes/itemRoutes');
-const { addResult, getResult } = require('./controllers/itemController');
 
 
 const app = express();
@@ -25,6 +24,7 @@ app.get('/', (req, res) => {
             getUser: '/user',
             updateProfile: '/user',
             addAppointment: '/add',
+            getAppointments: '/appointments',
             getPatients: '/patients',
             getPatient: '/patient/:id',
             deletePatient: '/patient/:id',
@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
             uploadFile: '/upload',
             getFile: '/file/:filename'
         },
-        lastUpdate: 'Friday, 8th June 2024, 07:50 PM'
+        lastUpdate: 'Monday, 10th June 2024, 12:00 PM'
     });
 });
 

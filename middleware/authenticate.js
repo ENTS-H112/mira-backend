@@ -5,7 +5,8 @@ const authenticate = async (req, res, next) => {
   
   if (!token) {
     return res.status(401).json({
-      message: 'Unauthorized'
+      message: 'Unauthorized, You need to login to access this route.',
+      status: 401
     })
   }
 
@@ -15,7 +16,7 @@ const authenticate = async (req, res, next) => {
     next();
   } catch (error) {
     res.status(401).json({
-      message: 'Unauthorized'
+      message: 'Unauthorized, token is invalid',
     })
   }
 };

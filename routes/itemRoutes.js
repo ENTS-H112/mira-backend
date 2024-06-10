@@ -1,61 +1,31 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/itemController');
+const doctorController = require('../controllers/doctorController');
+const patientController = require('../controllers/patientController');
+const userController = require('../controllers/userController');
+const fileController = require('../controllers/fileController');
 const authenticate = require('../middleware/authenticate');
 const upload = require('../middleware/multer');
 
-// Rute menambah dokter
-router.post('/doctor', authenticate, upload.single('profile_picture'), controller.addDoctor);
 
-// Rute untuk mendapatkan semua dokter
-router.get('/doctors', authenticate, controller.getDoctors);
-
-// Rute untuk mendapatkan dokter berdasarkan ID
-router.get('/doctor/:id', authenticate, controller.getDoctor);
-
-// Rute untuk update dokter berdasarkan ID
-router.patch('/doctor/:id', authenticate, upload.single('profile_picture'), controller.updateDoctor);
-
-// Rute untuk menghapus dokter berdasarkan ID
-router.delete('/doctor/:id', authenticate, controller.deleteDoctor);
-
-// Rute untuk mendapatkan user yang login
-router.get('/user', authenticate, controller.getUser);
-
-// Rute untuk memperbarui profil pengguna
-router.patch('/user', authenticate, upload.single('profile_picture'), controller.updateProfile);
-
-// Rute untuk mendapatkan notifikasi pasien berdasarkan ID user
-router.get('/user/:id/notification', authenticate, controller.updateStatus);
-
-// Rute untuk menambahkan item dengan autentikasi
-router.post('/add', authenticate, controller.addAppointment);
-
-// Rute untuk mendapatkan semua pasien untuk pengguna yang login
-router.get('/patients', authenticate, controller.getPatients);
-
-// Rute untuk mendapatkan pasien berdasarkan ID
-router.get('/patient/:id', authenticate, controller.getPatient);
-
-// delete patient by id
-router.delete('/patient/:id', authenticate, controller.deletePatient);
-
-// Rute untuk mengupdate pasien berdasarkan ID
-router.patch('/patient/:id', authenticate, controller.updatePatient);
-
-// Rute untuk mendapatkan riwayat pasien berdasarkan ID pasien
-router.get('/patient/:id/history', authenticate, controller.getHistory);
-
-// add result to patient 
-router.post('/patient/:id/result', authenticate, upload.single('result'), controller.addResult);
-
-// get result by id
-router.get('/patient/:id/result', authenticate, controller.getResult);
-
-// Rute untuk mengunggah file dengan autentikasi
-router.post('/upload', authenticate, upload.single('file'), controller.uploadFile);
-
-// Rute untuk mengakses file yang sudah diunggah
-router.get('/file/:filename', controller.getFile);
+router.post('/doctor', authenticate, upload.single('profile_picture'), doctorController.addDoctor);
+router.get('/doctors', authenticate, doctorController.getDoctors);
+router.get('/doctor/:id', authenticate, doctorController.getDoctor);
+router.patch('/doctor/:id', authenticate, upload.single('profile_picture'), doctorController.updateDoctor);
+router.delete('/doctor/:id', authenticate, doctorController.deleteDoctor);
+router.get('/user', authenticate, userController.getUser);
+router.patch('/user', authenticate, upload.single('profile_picture'), userController.updateProfile);
+router.get('/patient/:id/notification', authenticate, patientController.updateStatus);
+router.post('/add', authenticate, patientController.addAppointment);
+router.get('/appointments', authenticate, patientController.getAppointments);
+router.get('/patients', authenticate, patientController.getPatients);
+router.get('/patient/:id', authenticate, patientController.getPatient);
+router.delete('/patient/:id', authenticate, patientController.deletePatient);
+router.patch('/patient/:id', authenticate, patientController.updatePatient);
+router.get('/patient/:id/history', authenticate, patientController.getHistory);
+router.post('/patient/:id/result', authenticate, upload.single('result'), patientController.addResult);
+router.get('/patient/:id/result', authenticate, patientController.getResult);
+router.post('/upload', authenticate, upload.single('file'), fileController.uploadFile);
+router.get('/file/:filename', fileController.getFile);
 
 module.exports = router;
