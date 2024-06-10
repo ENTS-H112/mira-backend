@@ -3,7 +3,7 @@
 
 Silakan gunakan API ini untuk tim mobile
 
-## Features
+## Features:
 - Sign in & Sign up
 - Make an appointment
 - Check-up history
@@ -11,6 +11,9 @@ Silakan gunakan API ini untuk tim mobile
 - Display list of available doctor
 - Integrates data in databases using blockchain technology. By attaching a unique timestamp to each data entry, it ensures an accurate record of when data was created or modified. This process results in a transparent, tamper-proof and easily verifiable record for all data transactions, providing an extra layer of security and accountability.
 - Etc.
+
+## Upcoming features:
+- See the api-v2 branch
 
 ## Installation
 
