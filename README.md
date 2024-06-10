@@ -2,6 +2,16 @@
 # Repository API to tim mobile
 
 Silakan gunakan API ini untuk tim mobile
+
+## Features
+- Sign in & Sign up
+- Make an appointment
+- Check-up history
+- Easy-to-use instant radiology results (AI-generated)
+- Display list of available doctor
+- Integrates data in databases using blockchain technology. By attaching a unique timestamp to each data entry, it ensures an accurate record of when data was created or modified. This process results in a transparent, tamper-proof and easily verifiable record for all data transactions, providing an extra layer of security and accountability.
+- Etc.
+
 ## Installation
 
 Install mira backend api on local
