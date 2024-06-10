@@ -2,12 +2,21 @@
 # Repository API to tim mobile
 
 Silakan gunakan API ini untuk tim mobile
+
+## Changes between the first and second version
+### api-v1
+![App Screenshot](api-v1.png)
+
+### api-v2
+![App Screenshot](api-v2.png)
+
+
 ## Installation
 
 Install mira backend api on local
 
 ```bash
-  git clone https://github.com/ENTS-H112/mira-backend.git
+  git clone -b api-v2 https://github.com/ENTS-H112/mira-backend.git
   cd mira-backend
   npm i
 ```
@@ -21,10 +30,61 @@ run using Nodemon
 ```bash
   npm run dev
 ```
-    
+
 ## How to use API
 
+Get all endpoint
+```bash
+  http://localhost:4000
+```
+Response
+```json
+{
+    "message": "Welcome to the MIRA API",
+    "description": "This API is used for managing appointments and patients data",
+    "endpoints": {
+        "addDoctor": "/doctor",
+        "getDoctors": "/doctors",
+        "getDoctor": "/doctor/:id",
+        "updateDoctor": "/doctor/:id",
+        "deleteDoctor": "/doctor/:id",
+        "getUser": "/user",
+        "updateProfile": "/user",
+        "addAppointment": "/add",
+        "getPatients": "/patients",
+        "getPatient": "/patient/:id",
+        "deletePatient": "/patient/:id",
+        "updatePatient": "/patient/:id",
+        "getHistory": "/patient/:id/history",
+        "getNotification": "/user/:id/notification",
+        "addResult": "/patient/:id/result",
+        "getResult": "/patient/:id/result",
+        "uploadFile": "/upload",
+        "getFile": "/file/:filename"
+    },
+    "lastUpdate": "Friday, 8th June 2024, 07:50 PM"
+}
+```
+
+Login to get token (POST)
+
+```bash
+https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={key}
+```
+Body
+```json
+{
+    "email": "email@mail.com",
+    "password": "pasword",
+    "returnSecureToken": true
+}
+```
+
+### Save idToken and insert it into the authorization Bearer
+<b>Note: Bearer Token is only valid for one hour.</b>
+
 POST Create new appointment
+
 
 ```bash
   http://localhost:4000/add
@@ -51,7 +111,7 @@ Response
 ```json
 [
     {
-        "nama_pasien": "Sonn",
+        "nama_pasien": "name",
         "gender": "Male",
         "no_hp": "1234567890",
         "jam_kunjungan": "11:00-12:00",
@@ -66,7 +126,7 @@ Response
         "status": "Menunggu Konfirmasi"
     },
     {
-        "nama_pasien": "John Doe",
+        "nama_pasien": "name",
         "gender": "Male",
         "no_hp": "1234567890",
         "jam_kunjungan": "10:00-11:00",
