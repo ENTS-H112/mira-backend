@@ -7,7 +7,7 @@ on:
 env:
   PROJECT_ID: mira-team # TODO: update Google Cloud project id
   GAR_LOCATION: asia-southeast2 # TODO: update Artifact Registry location
-  GAR_REPOSITORY_NAME: image-registry # TODO: update Artifact Registry Repository name
+  GAR_REPOSITORY_NAME: mira-api-v2 # TODO: update Artifact Registry Repository name
   SERVICE: mira-api-v2 # TODO: update Cloud Run service name
   REGION: asia-southeast2 # TODO: update Cloud Run service region
 
