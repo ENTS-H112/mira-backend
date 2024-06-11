@@ -4,7 +4,7 @@ const itemRoutes = require('./routes/itemRoutes');
 
 
 const app = express();
-const port = process.env.PORT || 4001;;
+const port = 4000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
