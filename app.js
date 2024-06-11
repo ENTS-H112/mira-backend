@@ -36,7 +36,15 @@ app.get('/', (req, res) => {
             uploadFile: '/upload',
             getFile: '/file/:filename'
         },
-        lastUpdate: 'Monday, 10th June 2024, 12:00 PM'
+        lastUpdate: 'Tuesday, 11th June 2024, 12:30 PM',
+        logs: [
+            {
+                date: 'Tuesday, 11th June 2024',
+                time: '12:30 PM',
+                action: 'Remove firebase keys from the code',
+                description: 'The firebase keys were removed from the code and added to the .env file'
+            }
+        ]
     });
 });
 
