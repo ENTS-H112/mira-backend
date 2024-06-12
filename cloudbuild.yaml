@@ -1,5 +1,5 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-f', 'Dockerfile', '-t', 'asia-southeast2-docker.pkg.dev/mira-team/mira-backend-v2/mira-backend-v2:latest', '.']
+    args: ['build', '-f', 'Dockerfile', '-t', 'asia-southeast2-docker.pkg.dev/mira-team/mira-backend/mira-backend:latest', '.']
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'asia-southeast2-docker.pkg.dev/mira-team/mira-backend-v2/mira-backend-v2:latest']
+    args: ['push', 'asia-southeast2-docker.pkg.dev/mira-team/mira-backend/mira-backend:latest']
