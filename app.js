@@ -15,7 +15,8 @@ app.use('/', itemRoutes);
 app.get('/', (req, res) => {
     res.send({
         message: 'Welcome to the MIRA API V2',
-        description: 'This API is used for managing appointments and patients data',
+        description: 'This API is used for managing appointments and patients data for MIRA. Using high end security and encryption to ensure data is safe and secure.',
+        
     });
 });
 

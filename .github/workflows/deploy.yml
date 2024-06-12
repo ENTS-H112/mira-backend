@@ -5,11 +5,11 @@ on:
     branches: ["api-v2"]
 
 env:
-  PROJECT_ID: mira-team # TODO: update Google Cloud project id
-  GAR_LOCATION: asia-southeast2 # TODO: update Artifact Registry location
-  GAR_REPOSITORY_NAME: mira-api-v2 # TODO: update Artifact Registry Repository name
-  SERVICE: mira-api-v2 # TODO: update Cloud Run service name
-  REGION: asia-southeast2 # TODO: update Cloud Run service region
+  PROJECT_ID: mira-team
+  GAR_LOCATION: asia-southeast2
+  GAR_REPOSITORY_NAME: mira-api-v2
+  SERVICE: mira-api-v2
+  REGION: asia-southeast2
 
 jobs:
   deploy:
@@ -29,11 +29,10 @@ jobs:
           credentials_json: "${{ secrets.GCLOUD_SERVICE_ACCOUNT_KEY }}"
 
       - name: Configure Docker to use gcloud
-        run: |-
-          gcloud auth configure-docker ${{ env.GAR_LOCATION }}-docker.pkg.dev --quiet
+        run: gcloud auth configure-docker ${{ env.GAR_LOCATION }}-docker.pkg.dev --quiet
 
       - name: Build and Push Container
-        run: |-
+        run: |
           docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_REPOSITORY_NAME }}/${{ env.SERVICE }}:${{ github.sha }}" ./
           docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_REPOSITORY_NAME }}/${{ env.SERVICE }}:${{ github.sha }}"
 
@@ -45,6 +44,16 @@ jobs:
           region: ${{ env.REGION }}
           image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_REPOSITORY_NAME }}/${{ env.SERVICE }}:${{ github.sha }}
 
-      - name: Show Output
-        run: echo ${{ steps.deploy.outputs.url }}
-        
+      - name: Set environment variables
+        run: |
+          echo "FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }}" >> $GITHUB_ENV
+          echo "FIREBASE_PRIVATE_KEY_ID=${{ secrets.FIREBASE_PRIVATE_KEY_ID }}" >> $GITHUB_ENV
+          echo "FIREBASE_PRIVATE_KEY=${{ secrets.FIREBASE_PRIVATE_KEY }}" >> $GITHUB_ENV
+          echo "FIREBASE_CLIENT_EMAIL=${{ secrets.FIREBASE_CLIENT_EMAIL }}" >> $GITHUB_ENV
+          echo "FIREBASE_CLIENT_ID=${{ secrets.FIREBASE_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "FIREBASE_AUTH_URI=${{ secrets.FIREBASE_AUTH_URI }}" >> $GITHUB_ENV
+          echo "FIREBASE_TOKEN_URI=${{ secrets.FIREBASE_TOKEN_URI }}" >> $GITHUB_ENV
+          echo "FIREBASE_AUTH_PROVIDER_X509_CERT_URL=${{ secrets.FIREBASE_AUTH_PROVIDER_X509_CERT_URL }}" >> $GITHUB_ENV
+          echo "FIREBASE_CLIENT_X509_CERT_URL=${{ secrets.FIREBASE_CLIENT_X509_CERT_URL }}" >> $GITHUB_ENV
+          echo "FIREBASE_UNIVERSE_DOMAIN=${{ secrets.FIREBASE_UNIVERSE_DOMAIN }}" >> $GITHUB_ENV
+          echo "STORAGE_BUCKET=${{ secrets.STORAGE_BUCKET }}" >> $GITHUB_ENV
