@@ -1,20 +1,15 @@
-# Menggunakan image dasar Node.js
-FROM node:20
+FROM node:21.7.3-alpine3.18
 
-# Menentukan direktori kerja di dalam container
-WORKDIR /usr/src/app
+RUN mkdir -p /opt/app
 
-# Menyalin file package.json dan package-lock.json ke direktori kerja
+WORKDIR /opt/app
+
 COPY package*.json ./
 
-# Menginstal dependencies
 RUN npm install
 
-# Menyalin semua file kode ke direktori kerja
 COPY . .
 
-# Mengekspos port yang akan digunakan oleh aplikasi
 EXPOSE 4000
 
-# Menjalankan aplikasi
-CMD ["npm", "start"]
+CMD ["npm", "run", "start"]
