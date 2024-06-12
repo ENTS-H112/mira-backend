@@ -65,14 +65,16 @@ exports.addAppointment = async (req, res) => {
             .get();
 
         const nomor_antrian = `${countSnapshot.size + 1}`.padStart(4, '0');
-
+        const usia = moment().diff(moment(tanggal_lahir), 'years');
         const id = uuidv4();
+
         const itemData = {
             id,
             user_id: uid,
             nama_pasien,
             alamat,
             tanggal_lahir: moment(tanggal_lahir).format('YYYY-MM-DD'),
+            usia,
             gender,
             no_hp,
             email,

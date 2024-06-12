@@ -42,7 +42,7 @@ app.get('/', (req, res) => {
                 date: 'Wednesday, 12th June 2024',
                 time: '10:30 AM',
                 action: 'Revise appointment feature',
-                description: 'Revise the appointment feature "nomor_antrian" to number only' 
+                description: 'Revise the appointment feature "nomor_antrian" to number only and add age from patient data'  
             }
         ]
     });
