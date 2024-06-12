@@ -1,5 +1,5 @@
 const admin = require('firebase-admin');
-const serviceAccount = 'mira-team-firebase-adminsdk-i5a75-f2fe6fded0.json'
+const serviceAccount = 'mira-team-64edeb72841f.json'
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
