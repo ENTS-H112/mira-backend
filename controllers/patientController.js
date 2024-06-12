@@ -59,13 +59,12 @@ exports.addAppointment = async (req, res) => {
                 message: 'Mohon maaf, jadwal reservasi sudah terisi. Silakan pilih jadwal lain.'
             });
         }
-
         // Hitung jumlah dokumen dengan tanggal kunjungan yang sama
         const countSnapshot = await db.collection('pasien')
             .where('tanggal_kunjungan', '==', tanggal_kunjungan_formatted)
             .get();
 
-        const nomor_antrian = `${tanggal_kunjungan_formatted}-${countSnapshot.size + 1}`;
+        const nomor_antrian = `${countSnapshot.size + 1}`.padStart(4, '0');
 
         const id = uuidv4();
         const itemData = {

@@ -1,13 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const itemRoutes = require('./routes/itemRoutes');
-const dotenv = require('dotenv');
-
-dotenv.config();
 
 
 const app = express();
-const port = process.env.PORT || 4000;
+const port = 4000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -39,13 +36,13 @@ app.get('/', (req, res) => {
             uploadFile: '/upload',
             getFile: '/file/:filename'
         },
-        lastUpdate: 'Tuesday, 11th June 2024, 12:30 PM',
+        lastUpdate: 'Wednesday, 12th June 2024, 10:30 AM',
         logs: [
             {
-                date: 'Tuesday, 11th June 2024',
-                time: '12:30 PM',
-                action: 'Remove firebase keys from the code',
-                description: 'The firebase keys were removed from the code and added to the .env file'
+                date: 'Wednesday, 12th June 2024',
+                time: '10:30 AM',
+                action: 'Revise appointment feature',
+                description: 'Revise the appointment feature "nomor_antrian" to number only' 
             }
         ]
     });

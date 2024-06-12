@@ -13,14 +13,9 @@ RUN npm install
 # Menyalin semua file kode ke direktori kerja
 COPY . .
 
-# .env file copy
-COPY .env .env
-
 # Mengekspos port yang akan digunakan oleh aplikasi
 EXPOSE 4000
 
-# env port
-ENV PORT=4000
 
 # Menjalankan aplikasi
 CMD ["npm", "start"]
