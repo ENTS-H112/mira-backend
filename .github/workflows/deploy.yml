@@ -45,7 +45,7 @@ jobs:
           image: ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_REPOSITORY_NAME }}/${{ env.SERVICE }}:${{ github.sha }}
           env_vars: |
             FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }}
-            FIREBASE_PRIVATE_KEY_ID=${{ secrets.FIREBASE_PRIVATE_KEY_ID }}
+            FIREBASE_PRIVATE_KEY_ID=${{ secrets.FIREBASE_KEY_ID }}
             FIREBASE_PRIVATE_KEY=${{ secrets.FIREBASE_PRIVATE_KEY }}
             FIREBASE_CLIENT_EMAIL=${{ secrets.FIREBASE_CLIENT_EMAIL }}
             FIREBASE_CLIENT_ID=${{ secrets.FIREBASE_CLIENT_ID }}
