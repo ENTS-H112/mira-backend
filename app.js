@@ -39,10 +39,10 @@ app.get('/', (req, res) => {
             uploadFile: '/upload',
             getFile: '/file/:filename'
         },
-        lastUpdate: 'Wednesday, 17th June 2024 10:30 AM',
+        lastUpdate: 'Monday, 17th June 2024 10:30 AM',
         logs: [
             {
-                date: 'Wednesday, 17th June 2024',
+                date: 'Monday, 17th June 2024',
                 time: '10:30 AM',
                 action: 'Update', 
                 description: 'Add new refresh token  logic in login controller to handle expired token.'  
