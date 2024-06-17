@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const itemRoutes = require('./routes/itemRoutes');
+const { login } = require('./controllers/login');
 
 
 const app = express();
@@ -16,6 +17,8 @@ app.get('/', (req, res) => {
         message: 'Welcome to the MIRA API',
         description: 'This API is used for managing appointments and patients data',
         endpoints: {
+            login: '/login',
+            register: '/register',
             addDoctor: '/doctor',
             getDoctors: '/doctors',
             getDoctor: '/doctor/:id',
@@ -36,13 +39,13 @@ app.get('/', (req, res) => {
             uploadFile: '/upload',
             getFile: '/file/:filename'
         },
-        lastUpdate: 'Wednesday, 12th June 2024, 10:30 AM',
+        lastUpdate: 'Wednesday, 17th June 2024 10:30 AM',
         logs: [
             {
-                date: 'Wednesday, 12th June 2024',
+                date: 'Wednesday, 17th June 2024',
                 time: '10:30 AM',
-                action: 'Revise appointment feature',
-                description: 'Revise the appointment feature "nomor_antrian" to number only and add age from patient data'  
+                action: 'Update', 
+                description: 'Add new refresh token  logic in login controller to handle expired token.'  
             }
         ]
     });

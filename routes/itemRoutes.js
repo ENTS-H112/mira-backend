@@ -4,10 +4,14 @@ const doctorController = require('../controllers/doctorController');
 const patientController = require('../controllers/patientController');
 const userController = require('../controllers/userController');
 const fileController = require('../controllers/fileController');
+const loginController = require('../controllers/login');
+const registerController = require('../controllers/register');
 const authenticate = require('../middleware/authenticate');
 const upload = require('../middleware/multer');
 
 
+router.post('/login', loginController.login);
+router.post('/register', registerController.register);
 router.post('/doctor', authenticate, upload.single('profile_picture'), doctorController.addDoctor);
 router.get('/doctors', authenticate, doctorController.getDoctors);
 router.get('/doctor/:id', authenticate, doctorController.getDoctor);
