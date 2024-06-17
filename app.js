@@ -47,7 +47,8 @@ app.get('/', (req, res) => {
                 action: 'Update', 
                 description: 'Add new refresh token  logic in login controller to handle expired token.'  
             }
-        ]
+        ],
+        PostmanCollection: 'https://www.postman.com/mira-team/workspace/mira-mitra-radiologi/collection/24413897-491a24f2-df66-4b40-aba0-a6729b331c06?action=share&creator=24413897&active-environment=24413897-b52ae2b4-37a3-42fb-8a4f-ede1cebc6eea'
     });
 });
 

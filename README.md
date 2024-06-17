@@ -79,6 +79,20 @@ Response
 }
 ```
 
+Force access to endpoints
+
+```bash
+http://localhost:4000/<endpoints>
+```
+
+Response
+
+```json
+{
+    "message": "Unauthorized, You need to login to access this route."
+}
+```
+
 Login
 
 ```bash
@@ -107,7 +121,7 @@ Body
 {
     "email": "email@mail.com",
     "password": "pasword",
-    "phonNumber": "+62(your number)",
+    "phoneNumber": "+62(your number)",
     "username": "username",
     "returnSecureToken": true
 }
@@ -128,7 +142,7 @@ POST Create new appointment
   "no_hp": "1234567890",
   "email": "email@example.com",
   "tanggal_kunjungan": "2024-06-03",
-  "jam_kunjungan": "11:00"
+  "jam_kunjungan": "11:00",
   "jenis_periksa": "jenis"
 }
 ```
@@ -144,34 +158,66 @@ Response
 ```json
 [
     {
-        "nama_pasien": "name",
+        "usia": 34,
+        "nama_pasien": "Nama Pasien",
         "gender": "Male",
         "no_hp": "1234567890",
         "jam_kunjungan": "11:00-12:00",
-        "nomor_antrian": "2024/06/03-4",
-        "hari_kunjungan": "Monday",
+        "hari_kunjungan": "Wednesday",
         "alamat": "123 Main St",
-        "user_id": "unique ID",
-        "id": "Unique Id",
+        "user_id": "User ID",
+        "jenis_periksa": "Jenis Periksa",
+        "id": "patient ID",
         "tanggal_lahir": "1990-01-01",
         "email": "john@example.com",
-        "tanggal_kunjungan": "2024/06/03",
-        "status": "Menunggu Konfirmasi"
+        "tanggal_kunjungan": "2024/06/05",
+        "result": "result.pdf",
+        "status_hasil": true,
+        "nomor_antrian": "0002",
+        "status": "Selesai",
+        "ts": "5cb2539db636b7c12b708e30fa717d6297b3e96b6e084ac853e78fc2b854dc92"
     },
     {
-        "nama_pasien": "name",
+        "usia": 34,
+        "nama_pasien": "Nama Pasien 2",
+        "gender": "Male",
+        "no_hp": "1234567890",
+        "nomor_antrian": "0002",
+        "status_hasil": false,
+        "alamat": "123 Main St",
+        "user_id": "user ID",
+        "jenis_periksa": "Jenis Periksa",
+        "id": "Patient ID",
+        "tanggal_lahir": "1990-01-01",
+        "email": "john@example.com",
+        "waktu": {
+            "_seconds": 1718251200,
+            "_nanoseconds": 0
+        },
+        "status": "Jadwal Ulang",
+        "jam_kunjungan": "14:00-15:00",
+        "hari_kunjungan": "Friday",
+        "tanggal_kunjungan": "2024-06-14",
+        "ts": "0d1cef131f90cfb22b646c48a80409f6607af9cec194558e307092738d29640e"
+    },
+    {
+        "usia": 34,
+        "nama_pasien": "Nama Pasien 3",
         "gender": "Male",
         "no_hp": "1234567890",
         "jam_kunjungan": "10:00-11:00",
-        "nomor_antrian": "2024/06/03-3",
-        "hari_kunjungan": "Monday",
+        "nomor_antrian": "0001",
+        "hari_kunjungan": "Wednesday",
+        "status_hasil": false,
         "alamat": "123 Main St",
-        "user_id": "Unique ID",
-        "id": "Unique ID",
+        "user_id": "user ID",
+        "jenis_periksa": "Jenis Periksa",
+        "id": "patient ID",
         "tanggal_lahir": "1990-01-01",
         "email": "john@example.com",
-        "tanggal_kunjungan": "2024/06/03",
-        "status": "Menunggu Konfirmasi"
+        "tanggal_kunjungan": "2024/06/12",
+        "status": "Menunggu Konfirmasi",
+        "ts": "43fb8459469f10e2acb9df060c84d2232ea7431fb847cf01aa1706c0e615d968"
     }
 ]
 ```
@@ -185,25 +231,33 @@ GET patient by patients ID
 Response
 
 ```json
-{
-    "nama_pasien": "nama",
-    "gender": "Male",
-    "no_hp": "1234567890",
-    "jam_kunjungan": "11:00-12:00",
-    "nomor_antrian": "2024/06/03-4",
-    "hari_kunjungan": "Monday",
-    "alamat": "123 Main St",
-    "user_id": "unique id",
-    "id": "unique id",
-    "tanggal_lahir": "1990-01-01",
-    "email": "john@example.com",
-    "tanggal_kunjungan": "2024/06/03",
-    "status": "Menunggu Konfirmasi"
-}
+    {
+        "usia": 34,
+        "nama_pasien": "Nama Pasien 2",
+        "gender": "Male",
+        "no_hp": "1234567890",
+        "nomor_antrian": "0002",
+        "status_hasil": false,
+        "alamat": "123 Main St",
+        "user_id": "user ID",
+        "jenis_periksa": "Jenis Periksa",
+        "id": "Patient ID",
+        "tanggal_lahir": "1990-01-01",
+        "email": "john@example.com",
+        "waktu": {
+            "_seconds": 1718251200,
+            "_nanoseconds": 0
+        },
+        "status": "Jadwal Ulang",
+        "jam_kunjungan": "14:00-15:00",
+        "hari_kunjungan": "Friday",
+        "tanggal_kunjungan": "2024-06-14",
+        "ts": "0d1cef131f90cfb22b646c48a80409f6607af9cec194558e307092738d29640e"
+    },
 ```
 
 ## See more
 
 ## Postman Collection
 
- [Postman Collection](https://planetary-desert-87791.postman.co/workspace/New-Team-Workspace~04bf919a-1924-46ef-a272-1654e0d870ab/collection/24413897-491a24f2-df66-4b40-aba0-a6729b331c06?action=share&creator=24413897)
+ [Postman Collection](https://www.postman.com/mira-team/workspace/mira-mitra-radiologi/collection/24413897-491a24f2-df66-4b40-aba0-a6729b331c06?action=share&creator=24413897&active-environment=24413897-b52ae2b4-37a3-42fb-8a4f-ede1cebc6eea)
