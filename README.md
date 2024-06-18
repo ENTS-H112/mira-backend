@@ -41,43 +41,7 @@ run using Nodemon
 
 ## How to use API
 
-Get all endpoint
-
-```bash
-  http://localhost:4000
-```
-
-Response
-
-```json
-{
-    "message": "Welcome to the MIRA API",
-    "description": "This API is used for managing appointments and patients data",
-    "endpoints": {
-        "login": "/login",
-        "register": "/register",
-        "addDoctor": "/doctor",
-        "getDoctors": "/doctors",
-        "getDoctor": "/doctor/:id",
-        "updateDoctor": "/doctor/:id",
-        "deleteDoctor": "/doctor/:id",
-        "getUser": "/user",
-        "updateProfile": "/user",
-        "addAppointment": "/add",
-        "getPatients": "/patients",
-        "getPatient": "/patient/:id",
-        "deletePatient": "/patient/:id",
-        "updatePatient": "/patient/:id",
-        "getHistory": "/patient/:id/history",
-        "getNotification": "/user/:id/notification",
-        "addResult": "/patient/:id/result",
-        "getResult": "/patient/:id/result",
-        "uploadFile": "/upload",
-        "getFile": "/file/:filename"
-    },
-    "lastUpdate": "Friday, 8th June 2024, 07:50 PM"
-}
-```
+See [Postman Collection](https://www.postman.com/mira-team/workspace/mira-mitra-radiologi/collection/24413897-491a24f2-df66-4b40-aba0-a6729b331c06?action=share&creator=24413897&active-environment=24413897-b52ae2b4-37a3-42fb-8a4f-ede1cebc6eea)
 
 Force access to endpoints
 

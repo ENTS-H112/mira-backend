@@ -1,8 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const itemRoutes = require('./routes/itemRoutes');
-const { login } = require('./controllers/login');
-
 
 const app = express();
 const port = 4000;
